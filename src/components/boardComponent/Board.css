@@ -1,0 +1,21 @@
+.boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+    width: 180px;
+    border: 4px solid #1a2b35;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #3f5f6eab;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+}
