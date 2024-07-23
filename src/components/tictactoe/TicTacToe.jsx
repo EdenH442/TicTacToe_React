@@ -16,8 +16,8 @@ const TicTacToe = () =>
     return (
        <div className="container">
         <h1 className="title"> Simple Tic Tac Toe</h1>
-        <div>
-            <button className="reset" onClick={handleReset}> Reset </button>
+        <div className="buttons_container">
+            <button className="reset_button" onClick={handleReset}> Reset </button>
             <ColorScheme/>
         </div>
         <br />

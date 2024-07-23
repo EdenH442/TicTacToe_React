@@ -1,0 +1,8 @@
+.buttons_container{
+    display: flex;
+    justify-content: center;
+}
+
+.reset_button{
+    margin-right: 20px;
+}

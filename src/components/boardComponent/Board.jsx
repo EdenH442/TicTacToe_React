@@ -9,6 +9,7 @@ const Board = ({rowNum, reset}) =>
     const [board, setBoard] = useState(Array(rowNum*rowNum).fill(null));
     const [isPlayerNext, setIsPlayerNext] = useState(true);
     const [gameOver, setGameOver] = useState(false);
+    const [winnerMessage, setWinnerMessage] = useState(null);
 
     //for the reset button in the main page:
     useEffect(() => {
@@ -16,6 +17,7 @@ const Board = ({rowNum, reset}) =>
             setBoard(Array(rowNum * rowNum).fill(null));
             setIsPlayerNext(true);
             setGameOver(false);
+            setWinnerMessage(null);
         }
     }, [reset]);
 
@@ -49,12 +51,29 @@ const Board = ({rowNum, reset}) =>
         }
     }, [isPlayerNext, board, gameOver]);
 
+
     useEffect(() => {
         const winner = calculateWinner(board, rowNum);
-        if (winner || board.every(box => box !== null)) {
+        if (winner) {
             setGameOver(true);
+            setWinnerMessage(winner === 'X' ? 'Player Wins!' : 'Computer Wins!');
+        } else if (board.every(box => box !== null)) {
+            setGameOver(true);
+            setWinnerMessage('It\'s a Draw!');
         }
     }, [board, rowNum]);
+
+    useEffect(() => {
+        if (winnerMessage) {
+            const timeout = setTimeout(() => {
+                setBoard(Array(rowNum * rowNum).fill(null));
+                setIsPlayerNext(true);
+                setGameOver(false);
+                setWinnerMessage(null);
+            }, 3000); // Display the winner message for 3 seconds
+            return () => clearTimeout(timeout);
+        }
+    }, [winnerMessage, rowNum]);
 
 
     const renderSquare = (index) => (
@@ -85,8 +104,15 @@ const Board = ({rowNum, reset}) =>
     };
 
     return (
-        <div className="board">
-            {renderBoard()}
+        <div className="board-container">
+            {winnerMessage && (
+                <div className="winner-message">
+                    {winnerMessage}
+                </div>
+            )}
+            <div className="board">
+                {renderBoard()}
+            </div>
         </div>
     );
 };
